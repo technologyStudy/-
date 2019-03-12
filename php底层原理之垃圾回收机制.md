@@ -109,7 +109,7 @@ $a[] = &$a;
 xdebug_debug_zval( 'a' );
 ```
 
-由于该示例不好输出结果，用图表示，如图：
+由于该示例不好输出结果，用图表示，如图：   
 ![循环引用](https://user-gold-cdn.xitu.io/2019/3/3/169424e187e478d0?w=533&h=144&f=png&s=6937)
 
 举例：
@@ -117,7 +117,7 @@ xdebug_debug_zval( 'a' );
 unset($a);
 xdebug_debug_zval('a');
 ```
-如图：
+如图：   
 ![循环引用的内存泄漏](https://user-gold-cdn.xitu.io/2019/3/3/169424e18829deb1?w=463&h=144&f=png&s=2659)
 
 ## 新的垃圾回收机制
