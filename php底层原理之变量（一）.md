@@ -40,13 +40,13 @@ zval.value.obj  => 对象
 
 看到这里大家可能会比较奇怪，布尔型和资源是怎么对应到zval.value的lval上的呢？还有，NULL呢？
 
-#### 布尔型：
+#### 布尔型
 就像我们会将true和false映射成0和1进行数据库存储一样，php也是这么做的。所以php发现zval的type值是布尔型时，会将布尔型转成0或1存储在zval.value的lval中
 
-#### 资源：
+#### 资源
 资源对于php来说属于一个比较特殊的变量，而php会将每个资源对应的资源标识存储在zval.value的lval中。常见的资源有：文件句柄、数据库句柄等
 
-#### NULL：
+#### NULL
 对于NULL来说，就更好理解了，因为本身通过zval的type值即可区分，所以并没有将NULL值存储在zval的value中
 
 ## 变量生成
