@@ -13,7 +13,6 @@ struct _zval_struct {
 		} str;
 		HashTable *ht;
 		zend_object_value obj;
-		zend_ast *ast;
 	} value;					//变量value值
 	zend_uint refcount__gc;   //引用计数内存中使用次数，为0删除该变量
 	zend_uchar type;		   //变量类型
