@@ -12,7 +12,7 @@
 app.json里更改小程序导航栏样式：([点此查看对应小程序官方文档相关链接](https://developers.weixin.qq.com/miniprogram/dev/framework/config.html#全局配置) )
 ![navstyle-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/article_navstyle.png)
 代码如下：
-```
+```css
 window: {
   navigationStyle: 'custom'
 }
@@ -23,7 +23,7 @@ window: {
 自定义内容：当前页是否是首页，是否显示返回键及其颜色，是否显示home键及其颜色，标题名称及其颜色，整个标题栏的背景颜色
 ![navbar-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/article_navbar_logo.png)
 HTML:
-```
+```html
 <div class="nav-bar" :style="{paddingBottom: navHeight+'px'}">
     <div class="nav-con" :style="{backgroundColor: navBackgroundColor}">
       <!-- 状态栏 -->
@@ -40,7 +40,7 @@ HTML:
   </div>
 ```
 自定义属性：
-```
+```javaScript
 props: {
     navBackgroundColor: { // 标题栏-颜色
       default: 'white'
@@ -73,7 +73,7 @@ props: {
 ```
 ### 第三步：获取系统信息，用来计算最终标题栏高度
 JS:([点此查看wx.getSystemInfo小程序官方文档链接](https://developers.weixin.qq.com/miniprogram/dev/api/wx.getSystemInfo.html) )
-```
+```js
 onLoad () {
     // 落地页不显示[返回键]
     this.hasBack = getCurrentPages().length !== 1
@@ -115,7 +115,6 @@ CSS:
 ```
 ### 第四步：直接使用自定义组件，根据所需自定义内容灵活设置属性值
 ![navbar-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/article_title.png)
-
 本文的自定义标题栏navBar在我们自己开发的组件库[lemon(点击查看组件库文档地址)](http://120.77.37.44:83/#/)内，直接使用组件需要先安装[lemon](http://120.77.37.44:83/#/)，`欢迎交流使用～`操作如下：
 ##### 安装组件库`lemon`：
 ```
