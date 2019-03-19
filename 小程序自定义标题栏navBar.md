@@ -40,7 +40,7 @@ HTML:
   </div>
 ```
 自定义属性：
-```javaScript
+```js
 props: {
     navBackgroundColor: { // 标题栏-颜色
       default: 'white'
@@ -94,7 +94,7 @@ onLoad () {
   }
 ```
 CSS:
-```
+```css
 .nav-bar{
   width: 100vw;
   .nav-con{
@@ -115,6 +115,7 @@ CSS:
 ```
 ### 第四步：直接使用自定义组件，根据所需自定义内容灵活设置属性值
 ![navbar-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/article_title.png)
+
 本文的自定义标题栏navBar在我们自己开发的组件库[lemon(点击查看组件库文档地址)](http://120.77.37.44:83/#/)内，直接使用组件需要先安装[lemon](http://120.77.37.44:83/#/)，`欢迎交流使用～`操作如下：
 ##### 安装组件库`lemon`：
 ```
