@@ -8,7 +8,7 @@
 > * 第三步：获取系统信息，用来计算最终标题栏高度
 > * 第四步：直接使用自定义组件，根据所需自定义内容灵活设置属性值
 
-###第一步：全局配置小程序导航栏样式为custom
+### 第一步：全局配置小程序导航栏样式为custom
 app.json里更改小程序导航栏样式：([点此查看对应小程序官方文档相关链接](https://developers.weixin.qq.com/miniprogram/dev/framework/config.html#全局配置) )
 ![navstyle-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/article_navstyle.png)
 代码如下：
