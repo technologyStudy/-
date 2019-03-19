@@ -26,7 +26,7 @@ window: {
 自定义内容：当前页是否是首页，是否显示返回键及其颜色，是否显示home键及其颜色，标题名称及其颜色，整个标题栏的背景颜色
 ![navbar-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/article_navbar_logo.png)
 
-###属性 Properties
+### 属性 Properties
 | 参数       | 说明     | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
 | navBackgroundColor | 菜单栏颜色 | string | — | white |
@@ -164,11 +164,14 @@ CSS:
 ### 第四步：注意事项及遇到问题
 1.下拉小程序的时候发现，自定义组件也被下拉下来，没有固定在顶部不动。
 解决方式：给`nav-con`添加`position: fixed;top: 0;`
+
 2.又发现自定义标题栏在顶部定住之后，遮挡页面的顶部内容，如图所示：
 ![navbar-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/article_cover_page.png)
+
 解决方式：给`nav-bar`添加` :style="{paddingBottom: navHeight+'px'}"`,距离底部一个标题栏的高度。
 3.标题栏被页面z-index高的组件遮挡
 解决方式：给`nav-con`添加z-index: 999; // 提示-保持标题栏在最顶，页面最大z-index小于999
+
 4.标题名称过长进行优化处理，超过最大宽度范围进行省略隐藏
 
 ### 第五步：直接使用自定义组件，根据所需自定义内容灵活设置属性值
