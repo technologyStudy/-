@@ -26,6 +26,7 @@ window: {
 如图所示：
 自定义标题栏总高度 = 系统statusBarHeight + 标题栏titleBarHeight
 自定义内容：当前页是否是首页，是否显示返回键及其颜色，是否显示home键及其颜色，标题名称及其颜色，整个标题栏的背景颜色
+
 ![navbar-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/navbar_logo.png)
 
 ### 第三步：代码如下
@@ -123,7 +124,7 @@ export default {
       success: res => {
         that.statusBarHeight = res.statusBarHeight // 状态栏的高度
         
-        // ios和android的标题栏高度不同，单独设置
+        // ios和android的标题栏高度不同，需要单独设置
         if (/ios/i.test(res.platform)) {
           that.titleBarHeight = 44 // ios标题栏高度
         } else {
@@ -189,6 +190,7 @@ export default {
 </script>
 ```
 页面效果如图所示：
+
 ![navbar_default](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/navbar_default.png)
 
 ##### 2.首页及tabbar页面使用示例代码：
