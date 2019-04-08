@@ -12,7 +12,7 @@
 ### 第一步：全局配置小程序导航栏样式为custom
 main.js里更改小程序导航栏样式(原生小程序开发在app.json内更改)，custom自定义导航栏，只保留右上角胶囊按钮：([点此查看对应小程序官方文档相关链接](https://developers.weixin.qq.com/miniprogram/dev/framework/config.html#全局配置) )
 
-![navstyle-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/article_navstyle.png)
+![article_navstyle](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/article_navstyle.png)
 代码如下：
 ```css
 window: {
@@ -147,6 +147,7 @@ export default {
 ```
 CSS:
 ```css
+<style lang="scss" scoped>
 .nav-bar{
   width: 100vw;
   .nav-con{
@@ -168,6 +169,7 @@ CSS:
     }
   }
 }
+</style>
 ```
 ### 第四步：直接使用自定义组件，根据所需自定义内容灵活设置属性值
 ##### 1.非首页使用示例代码：
@@ -187,7 +189,7 @@ export default {
 </script>
 ```
 页面效果如图所示：
-![navbar-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/navbar_default.png)
+![navbar_default](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/navbar_default.png)
 
 ##### 2.首页及tabbar页面使用示例代码：
 （不显示左上角返回键和home键的页面isHome均设置为true，如:小程序底部tabBar页面）
@@ -195,14 +197,16 @@ export default {
 <nav-bar :is-home="true"></nav-bar>
 ```
 页面效果如图所示：
-![navbar-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/navbar_home.png)
+
+![navbar_home](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/navbar_home.png)
 
 ##### 3.沉浸式标题栏使用示例代码：
 ```html
 <nav-bar title-name='员工中心' is-transparent='true' title-color='white' home-color='white'></nav-bar>
 ```
 页面效果如图所示：
-![navbar-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/navbar-transparent.png)
+
+![navbar-transparent](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/navbar-transparent.png)
 
 
 参考文章：[https://www.jianshu.com/p/d67ee748445b](https://www.jianshu.com/p/d67ee748445b)
