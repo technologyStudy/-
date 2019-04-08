@@ -1,16 +1,16 @@
 # 小程序自定义标题栏navBar
 
 ------
-由于小程序默认提供的navigationBar在一些业务需求上有一定的局限性，自定义标题栏便可以给我们带来很大的拓展空间，本文的自定义标题栏组件基于mpvue开发，并使用了我们自己维护的zens-ui库及z-icon字体库，以下为开发及使用流程。
+### 业务场景：
+小程序自带标题栏只有返回按钮，我们的业务需求是返回按钮和返回首页按钮根据场景组合出现，方便用户直达首页，于是我们便封装了自定义标题栏navBar，以下代码示例是基于mpvue开发的。
 
 > * 第一步：全局配置小程序导航栏样式为custom
-> * 第二步：设计拆分好要自定义标题栏的样式和属性以及功能
-> * 第三步：主要代码：获取系统信息，用来计算最终标题栏高度
-> * 第四步：注意事项及遇到问题
-> * 第五步：直接使用自定义组件，根据所需自定义内容灵活设置属性值
+> * 第二步：设计拆分好要自定义标题栏的样式和属性
+> * 第三步：自定义标题栏代码如下
+> * 第四步：使用自定义标题栏示例，可以根据所需业务需求灵活设置属性值
 
 ### 第一步：全局配置小程序导航栏样式为custom
-main.js里更改小程序导航栏样式(原生开发小程序在app.json内更改)，custom自定义导航栏，只保留右上角胶囊按钮：([点此查看对应小程序官方文档相关链接](https://developers.weixin.qq.com/miniprogram/dev/framework/config.html#全局配置) )
+main.js里更改小程序导航栏样式(原生小程序开发在app.json内更改)，custom自定义导航栏，只保留右上角胶囊按钮：([点此查看对应小程序官方文档相关链接](https://developers.weixin.qq.com/miniprogram/dev/framework/config.html#全局配置) )
 
 ![navstyle-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/article_navstyle.png)
 代码如下：
@@ -19,48 +19,38 @@ window: {
   navigationStyle: 'custom'
 }
 ```
+设置custom后小程序所有的页面都需要自定义标题栏，只显示右上角胶囊按钮，当前页面效果如下：
+![navbar_custom](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/navbar_custom.png)
 
 ### 第二步：设计拆分好要自定义标题栏的样式和属性以及功能
 如图所示：
 自定义标题栏总高度 = 系统statusBarHeight + 标题栏titleBarHeight
 自定义内容：当前页是否是首页，是否显示返回键及其颜色，是否显示home键及其颜色，标题名称及其颜色，整个标题栏的背景颜色
-![navbar-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/article_navbar_logo.png)
+![navbar-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/navbar_logo.png)
 
-### 属性 Properties
-| 参数       | 说明     | 类型      | 可选值       | 默认值   |
-|---------- |-------- |---------- |-------------  |-------- |
-| navBackgroundColor | 菜单栏颜色 | string | — | white |
-| titleColor      | 标题文字颜色 | string | — | black |
-| titleName | 标题名称 | string | — | 首页 |
-| backColor      | 返回键颜色 | string | — | black |
-| hasBack | 是否显示返回键 | boolean | — | true |
-| homeColor      | home键颜色 | string | — | black |
-| hasHome | 是否显示home键 | boolean | — | true |
-| homePath      | home键的路径 | string | — | /pages/home/main |
-| isHome      | 当前页是否是首页 | boolean | — | false |
-
-### 事件 Events
-| 事件名称 | 说明 | 回调参数 |
-|---------- |-------- |---------- |
-| backClick  | 点击返回键,返回上一页 | — |
-| homeClick  | 点击home键盘,返回首页homePath | — |
-| checkFIrstPage  | 是否是第一个页面 | — |
-### 第三步：主要代码：获取系统信息，用来计算最终标题栏高度
+### 第三步：代码如下
 HTML:
 ```html
 <template>
+  <!-- paddingBottom: navHeight+'px' - 距离底部一个标题栏的高度，解决自定义标题栏遮挡页面显示的问题 -->
   <div class="nav-bar" :style="{paddingBottom: navHeight+'px'}">
     <div class="nav-con" :style="{backgroundColor: navBackgroundColor}">
+    
       <!-- 状态栏 -->
       <div :style="{height: statusBarHeight+'px'}"> </div>
+      
       <!-- 标题栏 -->
       <div class="flex-container" :style="{height: titleBarHeight+'px'}">
-        <div class="icons">
-          <text class="icon-arrow-left paddingl30" :style="{color: backColor}" @click="backClick" v-if="hasBack && !isHome"></text>
-          <text class="icon-home-slim paddingl30" :style="{color: homeColor}" @click="homeClick" v-if="hasHome && !isHome"></text>
+        <!-- 返回键和home键图标 -->
+        <div class="icons marginl20 flex-container " v-if="(hasBack || hasHome) && !isHome">
+          <text class="icon-arrow-left paddingh30 marginv15" :style="{color: backColor}" @click="backClick" v-if="hasBack"></text>
+          <p class="text-lighter" style="width:1rpx;" v-if="hasBack && hasHome">|</p>
+          <text class="icon-home-slim paddingh30 marginv15" :style="{color: homeColor}" @click="homeClick" v-if="hasHome"></text>
         </div>
-        <p class="title-name text-limit1 " :style="{color: titleColor}">{{titleName}}</p>
+        <!-- 标题文字 -->
+        <p class="title-name text-limit1 fs-36" :style="{color: titleColor}">{{titleName}}</p>
       </div>
+      
     </div>
   </div>
 </template>
@@ -77,7 +67,7 @@ export default {
     titleColor: { // 标题文字-颜色
       default: 'black'
     },
-    titleName: { // 标题文字
+    titleName: { // 标题文字内容
       default: '首页'
     },
     backColor: { // 返回键-颜色
@@ -92,10 +82,13 @@ export default {
     hasHome: { // 是否显示[home键]
       default: true
     },
-    homePath: { // home键的返回路径
+    homePath: { // 点击home键的返回路径
       default: '/pages/home/main'
     },
-    isHome: { // 当前页是否是首页 - true不显示任何图标
+    isHome: { // 当前页是否是首页 - true不显示[返回键]和[home键]
+      default: false
+    },
+    isTransparent: { // 是否是沉浸式标题栏
       default: false
     }
   },
@@ -107,36 +100,47 @@ export default {
     }
   },
   methods: {
+    // 点击[返回键]返回上一页
     backClick () {
       wx.navigateBack({
         delta: 1
       })
     },
+    // 点击[home键]回到首页的路径地址
     homeClick () {
       wx.reLaunch({
         url: this.homePath
       })
-    },
-    checkFIrstPage () {
-      this.hasBack = getCurrentPages().length !== 1
     }
   },
   onLoad () {
-    this.checkFIrstPage()
+    // 当前页为第一个页面时，不显示返回键(例如：落地页，首页等)
+    this.hasBack = getCurrentPages().length !== 1
+
     const that = this
-    // 获取手机系统信息
+    // 获取手机系统信息，用来计算及设置自定义标题栏的高度
     wx.getSystemInfo({
       success: res => {
-        that.statusBarHeight = res.statusBarHeight
+        that.statusBarHeight = res.statusBarHeight // 状态栏的高度
+        
+        // ios和android的标题栏高度不同，单独设置
         if (/ios/i.test(res.platform)) {
-          that.titleBarHeight = 44 // ios
+          that.titleBarHeight = 44 // ios标题栏高度
         } else {
-          that.titleBarHeight = 48 // android及其他
+          that.titleBarHeight = 48 // android及其他客户端标题栏高度
         }
-        // 自定义标题栏高度 = 状态栏高度 + 标题栏高度
+        
+        // 最终的自定义标题栏高度 = 状态栏高度 + 标题栏高度
         that.navHeight = res.statusBarHeight + that.titleBarHeight
+        console.log(that.navHeight)
       }
     })
+    
+    // 设置沉浸式标题栏，自定义标题栏变为透明
+    if (this.isTransparent) {
+      this.navHeight = 0
+      this.navBackgroundColor = 'transparent'
+    }
   }
 }
 </script>
@@ -147,45 +151,29 @@ CSS:
   width: 100vw;
   .nav-con{
     width: 100%;
-    position: fixed;
+    position: fixed; // 注意-固定自定义标题栏，解决下拉小程序时自定义标题栏也被拉下来的问题
     top: 0;
-    z-index: 999; // 注意 - 保持标题栏在最顶
+    z-index: 999999; // 注意-解决保持标题栏在页面最顶层不被覆盖的问题
+    .icons{
+      border: 2rpx solid #F6F6F6;
+      border-radius: 34rpx;
+    }
     .title-name{
       position: absolute;
-      left:70px;
-      right: 70px;
-      margin:auto;
+      left: 105px;
+      right: 105px;
+      margin: 0 auto;
       text-align: center;
       font-size: 32rpx；
     }
   }
 }
 ```
-### 第四步：注意事项及遇到问题
-1.下拉小程序的时候发现，自定义组件也被下拉下来，没有固定在顶部不动。
-解决方式：给`nav-con`添加`position: fixed;top: 0;`
-
-2.又发现自定义标题栏在顶部定住之后，遮挡页面的顶部内容，如图所示：
-![navbar-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/article_cover_page.png)
-
-解决方式：给`nav-bar`添加` :style="{paddingBottom: navHeight+'px'}"`,距离底部一个标题栏的高度。
-3.标题栏被页面z-index高的组件遮挡
-解决方式：给`nav-con`添加z-index: 999; // 提示-保持标题栏在最顶，页面最大z-index小于999
-
-4.标题名称过长进行优化处理，超过最大宽度范围进行省略隐藏
-
-### 第五步：直接使用自定义组件，根据所需自定义内容灵活设置属性值
-![navbar-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/article_title.png)
-
-本文的自定义标题栏navBar在我们自己开发的组件库[lemon(点击查看组件库文档地址)](http://120.77.37.44:83/#/)内，直接使用组件需要先安装[lemon](http://120.77.37.44:83/#/)，`欢迎交流使用～`操作如下：
-##### 安装组件库`lemon`：
-```
-npm i --save lemon
-```
-##### 使用示例代码：
+### 第四步：直接使用自定义组件，根据所需自定义内容灵活设置属性值
+##### 1.非首页使用示例代码：
 ```html
 <template>
-    <nav-bar :title-name="titleName"></nav-bar>
+    <nav-bar title-name='商品'></nav-bar>
 </template>
 <script >
 import navBar from 'lemon/src/navBar'
@@ -193,11 +181,28 @@ export default {
   compontents: {navBar},
   data () {
     return {
-     titleName: '我是标题名称'
     }
   }
 }
 </script>
 ```
+页面效果如图所示：
+![navbar-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/navbar_default.png)
+
+##### 2.首页及tabbar页面使用示例代码：
+（不显示左上角返回键和home键的页面isHome均设置为true，如:小程序底部tabBar页面）
+```html
+<nav-bar :is-home="true"></nav-bar>
+```
+页面效果如图所示：
+![navbar-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/navbar_home.png)
+
+##### 3.沉浸式标题栏使用示例代码：
+```html
+<nav-bar title-name='员工中心' is-transparent='true' title-color='white' home-color='white'></nav-bar>
+```
+页面效果如图所示：
+![navbar-logo](https://zens-pic.oss-cn-shenzhen.aliyuncs.com/static/gift/navbar-transparent.png)
+
 
 参考文章：[https://www.jianshu.com/p/d67ee748445b](https://www.jianshu.com/p/d67ee748445b)
